@@ -11,4 +11,6 @@ jobs:
         with:
           uri: https://google.com/
           filename: google.html
+          user-agent: "Cuedo"
+          max-redirections: 11
           retries: 3

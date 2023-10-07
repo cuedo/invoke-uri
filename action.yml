@@ -10,6 +10,11 @@ inputs:
     description: "Invoke the specified URI"
   filename:
     description: "Save the output to the specified file"
+  user-agent:
+    description: "Custom user agent"
+  max-redirections:
+    description: "The maximum number of redirections"
+    default: 5
   retries:
     description: "Retry the request if it fails"
     default: 3
@@ -26,7 +31,9 @@ runs:
       shell: pwsh
       env:
         URI: ${{ format('-Uri {0}', inputs.uri) }}
-        FILENAME: ${{ inputs.filename > 0 && format(' -OutFile "{0}"') || '' }}
-        RETRIES: ${{ inputs.retries > 0 && format(' -MaximumRetryCount {0}', inputs.retries) || '' }}
+        FILENAME: ${{ inputs.filename != '' && format(' -OutFile "{0}"') || '' }}
+        USER_AGENT: ${{ inputs.user-agent != '' && format(' -UserAgent "{0}"') || '' }}
+        MAX_REDIRECTIONS: ${{ inputs.max-redirections != 5 '' && format(' -MaximumRedirection {0}') || '' }}
+        RETRIES: ${{ inputs.retries != 3 && format(' -MaximumRetryCount {0}', inputs.retries) || '' }}
       run: |
-        Invoke-WebRequest ${{env.URI}}${{env.FILENAME}}${{env.RETRIES}}
+        Invoke-WebRequest ${{env.URI}}${{env.FILENAME}}${{env.MAX_REDIRECTIONS}}${{env.RETRIES}}
