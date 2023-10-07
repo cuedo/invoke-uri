@@ -5,6 +5,9 @@ branding:
   icon: 'link-2'
   color: 'orange'
 inputs:
+  method:
+    description: "Specifies the method used for the web request"
+    default: "get"
   uri:
     required: true
     description: "Invoke the specified URI"
@@ -39,13 +42,14 @@ runs:
       if: runner.os == 'Windows'
       shell: pwsh
       env:
-        URI: ${{ format('-Uri "{0}"', inputs.uri) }}
-        CONTENT_TYPE: ${{ format(' -ContentType "{0}"', inputs.content-type) }}
-        FILENAME: ${{ inputs.filename != '' && format(' -OutFile "{0}"', inputs.filename) || '' }}
-        USER_AGENT: ${{ inputs.user-agent != '' && format(' -UserAgent "{0}"', inputs.user-agent) || '' }}
+        METHOD: ${{ format(' -Method ''{0}''', inputs.method) }}
+        URI: ${{ format(' -Uri ''{0}''', inputs.uri) }}
+        CONTENT_TYPE: ${{ format(' -ContentType ''{0}''', inputs.content-type) }}
+        FILENAME: ${{ inputs.filename != '' && format(' -OutFile ''{0}''', inputs.filename) || '' }}
+        USER_AGENT: ${{ inputs.user-agent != '' && format(' -UserAgent ''{0}''', inputs.user-agent) || '' }}
         MAX_REDIRECTIONS: ${{ inputs.max-redirections != 5 && format(' -MaximumRedirection {0}', inputs.max-redirections) || '' }}
         RETRIES: ${{ inputs.retries != 3 && format(' -MaximumRetryCount {0}', inputs.retries) || '' }}
         RETRY_INTERVAL: ${{ inputs.retry-interval != 5 && format(' -RetryIntervalSec {0}', inputs.retry-interval) || '' }}
         RETRY_TIMEOUT: ${{ inputs.retry-timeout != 5 && format(' -TimeoutSec {0}', inputs.retry-timeout) || '' }}
       run: |
-        Invoke-WebRequest ${{env.URI}}${{env.CONTENT_TYPE}}${{env.FILENAME}}${{env.USER_AGENT}}${{env.MAX_REDIRECTIONS}}${{env.RETRIES}}${{env.RETRY_INTERVAL}}${{env.RETRY_TIMEOUT}}
+        Invoke-WebRequest ${{env.METHOD}}${{env.URI}}${{env.CONTENT_TYPE}}${{env.FILENAME}}${{env.USER_AGENT}}${{env.MAX_REDIRECTIONS}}${{env.RETRIES}}${{env.RETRY_INTERVAL}}${{env.RETRY_TIMEOUT}}
