@@ -36,4 +36,4 @@ runs:
         MAX_REDIRECTIONS: ${{ inputs.max-redirections != 5 && format(' -MaximumRedirection {0}', inputs.max-redirections) || '' }}
         RETRIES: ${{ inputs.retries != 3 && format(' -MaximumRetryCount {0}', inputs.retries) || '' }}
       run: |
-        Invoke-WebRequest ${{env.URI}}${{env.FILENAME}}${{env.MAX_REDIRECTIONS}}${{env.RETRIES}}
+        Invoke-WebRequest ${{env.URI}}${{env.FILENAME}}${{env.USER_AGENT}}${{env.MAX_REDIRECTIONS}}${{env.RETRIES}}
