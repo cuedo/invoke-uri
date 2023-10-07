@@ -33,7 +33,7 @@ runs:
         URI: ${{ format('-Uri {0}', inputs.uri) }}
         FILENAME: ${{ inputs.filename != '' && format(' -OutFile "{0}"') || '' }}
         USER_AGENT: ${{ inputs.user-agent != '' && format(' -UserAgent "{0}"') || '' }}
-        MAX_REDIRECTIONS: ${{ inputs.max-redirections != 5 '' && format(' -MaximumRedirection {0}') || '' }}
+        MAX_REDIRECTIONS: ${{ inputs.max-redirections != 5 && format(' -MaximumRedirection {0}') || '' }}
         RETRIES: ${{ inputs.retries != 3 && format(' -MaximumRetryCount {0}', inputs.retries) || '' }}
       run: |
         Invoke-WebRequest ${{env.URI}}${{env.FILENAME}}${{env.MAX_REDIRECTIONS}}${{env.RETRIES}}
