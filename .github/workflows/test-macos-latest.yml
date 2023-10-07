@@ -1,0 +1,16 @@
+on: [push]
+name: test-macos-latest
+jobs:
+  test-action:
+    name: Test
+    runs-on: macOS-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          uri: https://google.com/
+          filename: google.html
+          user-agent: "Cuedo"
+          max-redirections: 11
+          retries: 3
