@@ -20,10 +20,11 @@ runs:
       run: export DISPLAY="127.0.0.1:10.0"
       if: runner.os == 'Linux'
     - name: Invoke URI (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
       env:
         URI: ${{ format('-Uri {0}', inputs.uri) }}
         FILENAME: ${{ inputs.filename > 0 && format(' -OutFile "{0}"') || '' }}
         RETRIES: ${{ inputs.retries > 0 && format(' -MaximumRetryCount {0}', inputs.retries) || '' }}
       run: |
         Invoke-WebRequest ${{env.URI}}${{env.FILENAME}}${{env.RETRIES}}
-      if: runner.os == 'Windows'
