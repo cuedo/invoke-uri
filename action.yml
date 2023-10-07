@@ -17,8 +17,10 @@ runs:
   using: "composite"
   steps:
     - name: Invoke URI (Linux)
-      run: export DISPLAY="127.0.0.1:10.0"
       if: runner.os == 'Linux'
+      shell: bash
+      run: export DISPLAY="127.0.0.1:10.0"
+      
     - name: Invoke URI (Windows)
       if: runner.os == 'Windows'
       shell: pwsh
