@@ -1,0 +1,14 @@
+on: [push]
+name: test-windows-latest
+jobs:
+  test-action:
+    name: Test
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: /
+        with:
+          uri: https://google.com/
+          filename: google.html
+          retries: 3

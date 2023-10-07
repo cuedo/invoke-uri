@@ -1,0 +1,29 @@
+name: 'Invoke URI'
+description: 'Call a URI and return the result'
+author: foss@cuedo.com.au
+branding:
+  icon: 'link-2'
+  color: 'orange'
+inputs:
+  uri:
+    required: true
+    description: "Invoke the specified URI"
+  filename:
+    description: "Save the output to the specified file"
+  retries:
+    description: "Retry the request if it fails"
+    default: 3
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke URI (Linux)
+      run: export DISPLAY="127.0.0.1:10.0"
+      if: runner.os == 'Linux'
+    - name: Invoke URI (Windows)
+      env:
+        URI: ${{ format('-Uri {0}', inputs.uri) }}
+        FILENAME: ${{ inputs.filename > 0 && format(' -OutFile "{0}"') || '' }}
+        RETRIES: ${{ inputs.retries > 0 && format(' -MaximumRetryCount {0}', inputs.retries) || '' }}
+      run: |
+        Invoke-WebRequest ${{env.URI}}${{env.FILENAME}}${{env.RETRIES}}
+      if: runner.os == 'Windows'
