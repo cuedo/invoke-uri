@@ -40,7 +40,7 @@ runs:
       env:
         METHOD: ${{ format('-X ''{0}''', inputs.method) }}
         URI: ${{ format(' ''{0}''', inputs.uri) }}
-        CONTENT_TYPE: ${{ format(' -H ''Content-Type: {0}''', inputs.content-type) }}
+        CONTENT_TYPE: "${{ format(' -H ''Content-Type: {0}''', inputs.content-type) }}"
         FILENAME: ${{ inputs.filename != '' && format(' -o ''{0}''', inputs.filename) || '' }}
         USER_AGENT: ${{ inputs.user-agent != '' && format(' --user-agent ''{0}''', inputs.user-agent) || '' }}
         MAX_REDIRECTIONS: ${{ inputs.max-redirections != 5 && format(' --max-redirs {0}', inputs.max-redirections) || '' }}
