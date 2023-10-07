@@ -34,12 +34,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Invoke URI (Linux)
-      if: runner.os == 'Linux'
+    - name: Invoke URI (macOS and Linux)
+      if: runner.os == 'Linux' || runner.os == 'macOS'
       shell: bash
       env:
         METHOD: ${{ format('-X ''{0}''', inputs.method) }}
-        URI: ${{ format(' ''{0}''', inputs.uri) }}
+        URI: ${{ format(' --no-progress-meter ''{0}''', inputs.uri) }}
         CONTENT_TYPE: "${{ format(' -H ''Content-Type: {0}''', inputs.content-type) }}"
         FILENAME: ${{ inputs.filename != '' && format(' -o ''{0}''', inputs.filename) || '' }}
         USER_AGENT: ${{ inputs.user-agent != '' && format(' --user-agent ''{0}''', inputs.user-agent) || '' }}
