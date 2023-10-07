@@ -7,7 +7,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: /
+      - uses: ./
         with:
           uri: https://google.com/
           filename: google.html
